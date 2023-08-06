@@ -1,3 +1,6 @@
+using TechStack.API.Interfaces;
+using TechStack.API.Service;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -7,6 +10,9 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+
+
+builder.Services.AddScoped<ICategory, CategoryService>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

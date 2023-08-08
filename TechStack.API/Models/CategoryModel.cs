@@ -2,7 +2,7 @@
 {
     public class CategoryModel
     {
-        public int      Id              { get; set; }
+        public long     CategoryId { get; set; }
         public string   Name            { get; set; }
         public string   URLHandle       { get; set; }
     }

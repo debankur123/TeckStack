@@ -1,7 +1,5 @@
 ﻿using Microsoft.Data.SqlClient;
-using Microsoft.Extensions.Configuration;
 using System.Data;
-using System.Data.SqlTypes;
 using TechStack.API.Interfaces;
 using TechStack.API.Models;
 
@@ -37,6 +35,49 @@ namespace TechStack.API.Service
                     return false;
                 }
             }
+        }
+
+
+        public  List<CategoryModel> GetAllCategories()
+        {
+            using (SqlConnection con = new SqlConnection(connectionString))
+            {
+                con.Open();
+                SqlCommand sqlComm = new SqlCommand("USP_TECHSTACK_G_GetAllCategory", con);
+                sqlComm.CommandType = CommandType.StoredProcedure;
+                List<CategoryModel> catList = new List<CategoryModel>();
+                SqlDataAdapter sda = new SqlDataAdapter(sqlComm);
+                DataTable dt = new DataTable();
+                sda.Fill(dt);
+                foreach (DataRow dr in dt.Rows)
+                {
+                    CategoryModel cat = new CategoryModel();
+                    cat.CategoryId = (long)(dr["CategotyId"]);
+                    cat.Name = dr["Name"].ToString();
+                    cat.URLHandle = dr["URLHandle"].ToString();
+                    catList.Add(cat);
+                }
+                return catList;
+            }
+        }
+        public List<CategoryModel> GetCategoryById(int id) { 
+            SqlConnection con = new SqlConnection(connectionString);
+            con.Open();
+            List<CategoryModel> catList = new List<CategoryModel>();
+            SqlCommand sqlComm = new SqlCommand("USP_TECHSTACK_G_GetCategoryById", con);
+            sqlComm.CommandType = CommandType.StoredProcedure;
+            sqlComm.Parameters.AddWithValue("@Id", id);
+            SqlDataAdapter sda = new SqlDataAdapter(sqlComm);
+            DataTable dt = new DataTable();
+            sda.Fill(dt);
+            foreach(DataRow dr in dt.Rows)
+            {
+                CategoryModel cat = new CategoryModel();
+                cat.Name = dr["Name"].ToString();
+                cat.URLHandle = dr["URLHandle"].ToString();
+                catList.Add(cat);
+            }
+            return catList;
         }
     }
 }

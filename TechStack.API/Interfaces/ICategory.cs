@@ -6,6 +6,9 @@ namespace TechStack.API.Interfaces
     {
         bool AddCategories(CategoryModel cm);
         List<CategoryModel> GetAllCategories();
-        List<CategoryModel>GetCategoryById(int id);
+        CategoryModel GetCategoryById(int id);
+        //void UpdateCategories(CategoryModel cm,int id);
+        bool UpdateCategories(int id,CategoryModel cm);
+        bool DeleteCategory(int id);
     }
 }

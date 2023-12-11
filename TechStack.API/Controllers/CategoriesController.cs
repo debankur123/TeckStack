@@ -3,12 +3,14 @@ using System.ComponentModel;
 using TechStack.API.Interfaces;
 using TechStack.API.Models;
 
+
 namespace TechStack.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
     public class CategoriesController : ControllerBase
     {
+
         private readonly ICategory category;
         public CategoriesController(ICategory _category)
         {

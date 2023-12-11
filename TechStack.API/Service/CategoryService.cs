@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Http.HttpResults;
+﻿
 using Microsoft.Data.SqlClient;
 using System.Data;
 using TechStack.API.Interfaces;
@@ -76,17 +76,6 @@ namespace TechStack.API.Service
             }
             return cm;
         }
-        //public void UpdateCategories(CategoryModel cm,int id)
-        //{
-        //    SqlConnection con = new SqlConnection(connectionString);
-        //    con.Open();
-        //    SqlCommand sqlCommand = new SqlCommand("USP_TS_T_UpdateCategories", con);
-        //    sqlCommand.CommandType = CommandType.StoredProcedure;
-        //    sqlCommand.Parameters.AddWithValue("@Id", id);
-        //    sqlCommand.Parameters.AddWithValue("@Name", cm.Name);
-        //    sqlCommand.Parameters.AddWithValue("@URLHandle", cm.URLHandle);
-        //    sqlCommand.ExecuteNonQuery();
-        //}
 
         public bool UpdateCategories(int id,CategoryModel model)
         {

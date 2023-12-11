@@ -3,12 +3,14 @@ using System.ComponentModel;
 using TechStack.API.Interfaces;
 using TechStack.API.Models;
 
+
 namespace TechStack.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
     public class CategoriesController : ControllerBase
     {
+
         private readonly ICategory category;
         public CategoriesController(ICategory _category)
         {
@@ -25,7 +27,7 @@ namespace TechStack.API.Controllers
                 bool insertResult = category.AddCategories(cm);
                 if (insertResult)
                 {
-                    return Ok();
+                    return Ok(insertResult);
                 }
                 else { return BadRequest(); }
             }
@@ -54,6 +56,11 @@ namespace TechStack.API.Controllers
             }
         }
 
+        /// <summary>
+        ///     Display single category by Id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
 
         [HttpGet]
         [Route("GetCategoryById")]
@@ -63,7 +70,7 @@ namespace TechStack.API.Controllers
             try
             {
                 var catListById = category.GetCategoryById(id);
-                if (catListById == null || catListById.Count == 0)
+                if (catListById == null || catListById.CategoryId == 0)
                 {
                     return BadRequest();
                 }
@@ -77,5 +84,57 @@ namespace TechStack.API.Controllers
                 return StatusCode(500, "An error occured while processing " + ex.Message);
             }
         }
+        /// <summary>
+        /// Update method for category update
+        /// </summary>
+        /// <param name="cm"></param>
+        /// <returns></returns>
+
+        [HttpPost]
+        [Route("UpdateCategories")]
+        [Description("Method for Adding categories")]
+        public IActionResult UpdateCategories(int id,[FromBody] CategoryModel model)
+        {
+            try
+            {
+                bool updatedResult = category.UpdateCategories(id,model);
+                if (updatedResult)
+                {
+                    return Ok(updatedResult);
+                }
+                else { return BadRequest(); }
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, "An error occured while processing " + ex.Message);
+            }
+        }
+        /// <summary>
+        /// Method for Deleting categories
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        /// 
+
+        [HttpPost]
+        [Route("DeleteCategories")]
+        [Description("Method for Deleting categories")]
+        public IActionResult DeleteCategory(int id)
+        {
+            try
+            {
+                bool deletedResult = category.DeleteCategory(id);
+                if (deletedResult)
+                {
+                    return Ok(deletedResult);
+                }
+                else { return BadRequest(); }
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, "An error occured while processing " + ex.Message);
+            }
+        }
+
     }
 }
